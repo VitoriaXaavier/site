@@ -103,7 +103,7 @@ func EditaProduto (id string) Produto {
 
 }
 
-func AtualizaProduto (nome string,  descricao string, preco float64, quantidade int, id int64) {
+func AtualizaProduto (nome string,  descricao string, preco float64, quantidade int, id int) {
 	db := db.ConectaBancoDados()
 	defer db.Close()
 

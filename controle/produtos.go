@@ -9,7 +9,6 @@ import (
 	"github.com/VitoriaXaavier/site/models"
 )
 
-
 var temp = template.Must(template.ParseGlob("templates/*.html"))
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -19,7 +18,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func New (w http.ResponseWriter, r *http.Request) {
+func New(w http.ResponseWriter, r *http.Request) {
 
 	temp.ExecuteTemplate(w, "New", nil)
 }
@@ -42,13 +41,13 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Println("Erro na conversão da Quantidade: ", err)
 		}
-		models.CriaNovoProduto(nome,descricao,precoConvertido,quantidadeConvertida)
+		models.CriaNovoProduto(nome, descricao, precoConvertido, quantidadeConvertida)
 	}
 
-	http.Redirect(w, r,"/", 301)
+	http.Redirect(w, r, "/", 301)
 }
 
-func Deleta (w http.ResponseWriter, r *http.Request) {
+func Deleta(w http.ResponseWriter, r *http.Request) {
 	idProduto := r.URL.Query().Get("id")
 	models.DeletaProduto(idProduto)
 	http.Redirect(w, r, "/", 301)
@@ -60,7 +59,7 @@ func Edita(w http.ResponseWriter, r *http.Request) {
 	temp.ExecuteTemplate(w, "Edit", produto)
 }
 
-func Update (w http.ResponseWriter, r *http.Request) {
+func Update(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 
 		id := r.FormValue("id")
@@ -69,23 +68,22 @@ func Update (w http.ResponseWriter, r *http.Request) {
 		preco := r.FormValue("preco")
 		quantidade := r.FormValue("quantidade")
 
-		idConvertido, err := strconv.ParseInt(id, 10, 0)
-
+		idConvertido, err := strconv.Atoi(id)
 		if err != nil {
 			log.Println("Erro na conversão do ID:", err)
-		
+
 		}
-		precoConvertido, err := strconv.ParseFloat(preco,64)
+		precoConvertido, err := strconv.ParseFloat(preco, 64)
 
 		if err != nil {
 			log.Println("Erro na conversão do Preço:", err)
-		
+
 		}
 		quantidadeConvertida, err := strconv.Atoi(quantidade)
 
 		if err != nil {
 			log.Println("Erro na conversão da Quantidade:", err)
-		
+
 		}
 
 		models.AtualizaProduto(nome, descricao, precoConvertido, quantidadeConvertida, idConvertido)
